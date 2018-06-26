@@ -28,22 +28,15 @@ public class Significance {
         else word_count.put(word, 1);
     }
 
-    String getSigWord() {
-        Integer highest_value = Collections.max(word_count.values());
-        for (HashMap.Entry entry : word_count.entrySet()){
-            if (entry.getValue().equals(highest_value)) return (String) entry.getKey();
-        }
-        return null;
-    }
+    ArrayList<String> getUpToNthSigWord(int n) {
+        ArrayList<String> words = new ArrayList<>(n);
+        String[] keys   = word_count
+                .keySet()
+                .toArray(new String[0]);
 
-    // TODO: 26/06/2018 Add nth sig-word getter
-//    ArrayList<String> getUpToNthSigWord(int n) {
-//        ArrayList<String> words = new ArrayList<>(n);
-//
-//        while (n <= 0){
-//
-//        }
-//    }
+        words.addAll(Arrays.asList(keys).subList(0, n));
+        return words;
+    }
 
     void cleanup() {
         word_count.remove("");
