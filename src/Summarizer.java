@@ -1,11 +1,22 @@
+import java.io.*;
 import java.util.*;
 
 public class Summarizer {
     static class Significance {
-        HashMap<String, Integer> word_count;
+        private HashMap<String, Integer> word_count;
+        private ArrayList<String>        common_words;
 
         Significance (){
-            word_count = new HashMap<>();
+            word_count   = new HashMap<>();
+            common_words = new ArrayList<>();
+            try {
+                BufferedReader br = new BufferedReader(new FileReader("res/common_words.txt"));
+                String line;
+                while ((line=br.readLine()) != null) common_words.add(line);
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         /**
@@ -29,6 +40,16 @@ public class Summarizer {
         ArrayList<String> getUpToAndIncludingNthSigWord(int n) {
             return null;
         }
+
+        void cleanup() {
+            word_count.remove("");
+            word_count.entrySet().removeIf(kv -> common_words.contains(kv.getKey()));
+        }
+
+        //Utility Methods
+        public String getSignificantWords(){ return word_count.keySet().toString(); }
+        public String getSignificanceOfWords(){ return word_count.entrySet().toString(); }
+        public int getSignificantWordLength(){ return word_count.entrySet().size(); }
     }
 
     public static void main(String[] args) {
@@ -36,15 +57,17 @@ public class Summarizer {
         Scanner in = new Scanner (System.in);
         ArrayList<String> raw_corpus = new ArrayList<>();
         while (in.hasNext()) raw_corpus.add(in.nextLine());
-        String corpus = raw_corpus.stream().reduce(null, (a, b) -> a+b);
+        String corpus = raw_corpus.stream().reduce("", (a, b) -> a+b);
 
 
         String[] sentences     = corpus.split("[.]");
         String[] words         = corpus.split("[ .,]");
         Significance sig_words = new Significance();
 
-        for (String word : words) sig_words.add(word);
+        for (String word : words) sig_words.add(word.toLowerCase());
+        sig_words.cleanup();
         String msw = sig_words.getSigWord();
-        ArrayList<String> msws = sig_words.getUpToAndIncludingNthSigWord(1);
+        //ArrayList<String> msws = sig_words.getUpToAndIncludingNthSigWord(1);
+        System.out.println(msw);
     }
 }
