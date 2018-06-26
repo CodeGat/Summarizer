@@ -3,11 +3,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Significance {
+public class SignificantWords {
     private HashMap<String, Integer> word_count;
     private ArrayList<String> common_words;
 
-    Significance (){
+    SignificantWords(){
         word_count   = new HashMap<>();
         common_words = new ArrayList<>();
         try {
@@ -28,14 +28,14 @@ public class Significance {
         else word_count.put(word, 1);
     }
 
-    ArrayList<String> getUpToNthSigWord(int n) {
+    String[] getUpToNthSigWord(int n) {
         ArrayList<String> words = new ArrayList<>(n);
         String[] keys   = word_count
                 .keySet()
                 .toArray(new String[0]);
 
         words.addAll(Arrays.asList(keys).subList(0, n));
-        return words;
+        return words.toArray(new String[0]);
     }
 
     void cleanup() {
