@@ -1,32 +1,34 @@
-public class SignificantSentences {
-    String[] sentences;
-    String[] words;
+import java.util.*;
 
-    public SignificantSentences(String[] sentences, String[] words) {
+class SignificantSentences {
+    private String[] sentences;
+    private String[] words;
+
+    SignificantSentences(String[] sentences, String[] words) {
         this.sentences = sentences;
         this.words = words;
     }
 
-
-    /**
-     * @return the most significant sentence based on:
-     *      - the amount of times the words appear
-     *      - taking into account the significance of the words!!
-     */
-    public String getMostSigSentence() {
-        String most_sig_sentence = "";
-        int max_sig = 0;
+    String[] getNMostSigSentences(int n) {
+        String[] ordered_most_sig_sentences = new String[n];
+        HashMap<String, Integer> most_sig_sentences = new HashMap<>();
 
         for (String sentence : sentences){
-            int sentence_sig = 0;
+            int sig = 0;
 
-            for (String word : words) if (sentence.contains(word)) sentence_sig++;
-            if (sentence_sig >= max_sig) {
-                max_sig = sentence_sig;
-                most_sig_sentence = sentence;
+            for (int i = 0; i < words.length; i++) {
+                if (sentence.contains(words[i])) sig += words.length - i;
             }
+            most_sig_sentences.put(sentence, sig);
         }
 
-        return most_sig_sentence;
+        Set<HashMap.Entry<String, Integer>> entries    = most_sig_sentences.entrySet();
+        ArrayList<HashMap.Entry<String, Integer>> list = new ArrayList<>(entries);
+        list.sort(Comparator.comparing(Map.Entry::getValue));
+        Collections.reverse(list);
+
+        for (int i = 0; i < n; i++) ordered_most_sig_sentences[i] = list.get(i).getKey();
+
+        return ordered_most_sig_sentences;
     }
 }
