@@ -37,9 +37,9 @@ public class BiMapTests {
         biMap.add("Zebra", 101);
         biMap.add("Foo", 59111);
 
-        biMap.sortWithFirst();
+        biMap.sortWithSigstring();
         Assert.assertEquals("<Apple, 100><Banana, 99><Cherry, 20><Foo, 59111><Zebra, 101>", biMap.toString());
-        biMap.sortWithFirst();
+        biMap.sortWithSigstring();
         Assert.assertEquals("<Apple, 100><Banana, 99><Cherry, 20><Foo, 59111><Zebra, 101>", biMap.toString());
     }
 
@@ -52,9 +52,9 @@ public class BiMapTests {
         biMap.add("Zebra", 101);
         biMap.add("Foo", 59111);
 
-        biMap.sortWithSecond();
+        biMap.sortWithCount();
         Assert.assertEquals("<Cherry, 20><Banana, 99><Apple, 100><Zebra, 101><Foo, 59111>", biMap.toString());
-        biMap.sortWithSecond();
+        biMap.sortWithCount();
         Assert.assertEquals("<Cherry, 20><Banana, 99><Apple, 100><Zebra, 101><Foo, 59111>", biMap.toString());
     }
 
@@ -65,10 +65,10 @@ public class BiMapTests {
         biMap.add("Cherry", 20);
         biMap.add("Banana", 99);
 
-        Assert.assertEquals("20", biMap.getSecondWith("Cherry").toString());
-        Assert.assertEquals("Apple", biMap.getFirstWith(100));
-        Assert.assertNull(biMap.getSecondWith("Not Here"));
-        Assert.assertNull(biMap.getFirstWith(0));
+        Assert.assertEquals("20", biMap.getCount("Cherry").toString());
+        Assert.assertEquals("Apple", biMap.getSigstring(100));
+        Assert.assertNull(biMap.getCount("Not Here"));
+        Assert.assertNull(biMap.getSigstring(0));
     }
 
     @Test
@@ -78,10 +78,10 @@ public class BiMapTests {
         biMap.add("Cherry", 20);
         biMap.add("Banana", 99);
 
-        Assert.assertTrue(biMap.containsFirst("Cherry"));
-        Assert.assertTrue(biMap.containsSecond(20));
-        Assert.assertFalse(biMap.containsFirst("Nothing Here"));
-        Assert.assertFalse(biMap.containsSecond(9001));
+        Assert.assertTrue(biMap.containsSigstring("Cherry"));
+        Assert.assertTrue(biMap.containsCount(20));
+        Assert.assertFalse(biMap.containsSigstring("Nothing Here"));
+        Assert.assertFalse(biMap.containsCount(9001));
     }
 
     @Test

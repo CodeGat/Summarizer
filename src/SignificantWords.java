@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class SignificantWords {
-    private HashMap<String, Integer> word_count;
+    private BiMap word_count;
     private ArrayList<String> common_words;
 
     SignificantWords(){
-        word_count   = new HashMap<>();
+        word_count   = new BiMap();
         common_words = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader("res/common_words.txt"));
@@ -24,38 +24,26 @@ public class SignificantWords {
      * @param word the word to be added.
      */
     void add(String word){
-        if (word_count.containsKey(word)) word_count.put(word, word_count.get(word)+1);
-        else word_count.put(word, 1);
+        if (word_count.containsSigstring(word)) word_count.increment(word);
+        else word_count.add(word, 1);
     }
 
     String[] getUpToNthSigWord(int n) {
-        ArrayList<String> words = new ArrayList<>(n);
-        String[] keys   = word_count
-                .keySet()
-                .toArray(new String[0]);
-
-        words.addAll(Arrays.asList(keys).subList(0, n));
-        return words.toArray(new String[0]);
+        String[] keys = word_count.getSigStrings();
+        return Arrays.copyOf(keys, n);
     }
 
     void cleanup() {
-        word_count.remove("");
-        word_count.entrySet().removeIf(kv -> common_words.contains(kv.getKey()));
+        String[] sigstrs = word_count.getSigStrings();
+
+        word_count.removeUsingSigstring("");
+        for (String sigstr : sigstrs) if (common_words.contains(sigstr)) word_count.removeUsingSigstring(sigstr);
     }
 
-    void sortByValue() {
-        Set<HashMap.Entry<String, Integer>> entries    = word_count.entrySet();
-        ArrayList<HashMap.Entry<String, Integer>> list = new ArrayList<>(entries);
-        LinkedHashMap<String, Integer> ordered_map     = new LinkedHashMap<>();
-
-        list.sort(Comparator.comparing(Map.Entry::getValue));
-        Collections.reverse(list);
-        for (Map.Entry<String, Integer> entry : list) ordered_map.put(entry.getKey(), entry.getValue());
-        word_count = ordered_map;
-    }
+    void sort(){ word_count.sortWithCount(); }
 
     //Utility Methods
-    public String getSignificantWords()     { return word_count.keySet().toString(); }
-    public String getSignificanceOfWords()  { return word_count.entrySet().toString(); }
-    public int    getSignificantWordLength(){ return word_count.entrySet().size(); }
+    public String getSignificantWords()     { return Arrays.toString(word_count.getSigStrings()); }
+    public String getSignificanceOfWords()  { return word_count.toString(); }
+    public int    getSignificantWordLength(){ return word_count.size(); }
 }

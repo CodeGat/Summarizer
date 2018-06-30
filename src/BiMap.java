@@ -30,23 +30,24 @@ public class BiMap {
         }
     }
 
-    void add(String sigstring, Integer second){ pairs.add(new Pair(sigstring, second)); }
+    void add(String sigstring, Integer count){ pairs.add(new Pair(sigstring, count)); }
 
     void increment(String sigstring) {
         for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) pair.count = pair.count++;
     }
 
-    Integer getSecondWith(String sigstring){
+    Integer getCount(String sigstring){
         for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) return pair.count;
         return null;
     }
 
-    String getFirstWith(Integer count){
+    // TODO: 30/06/2018 Gets only the first, could be more than one sigstring that occurs n times
+    String getSigstring(Integer count){
         for (Pair pair : pairs) if (pair.count.equals(count)) return pair.sigstring;
         return null;
     }
 
-    void sortWithFirst(){
+    void sortWithSigstring(){
         pairs.sort((p1, p2)-> {
             if (p1.sigstring.equals(p2.sigstring)) return 0;
             else if (p1.sigstring.compareTo(p2.sigstring) < 0) return -1;
@@ -54,7 +55,7 @@ public class BiMap {
         });
     }
 
-    void sortWithSecond(){
+    void sortWithCount(){
         pairs.sort((p1, p2) -> {
             if (p1.count.equals(p2.count)) return 0;
             else if (p1.count.compareTo(p2.count) < 0) return -1;
@@ -62,14 +63,24 @@ public class BiMap {
         });
     }
 
-    boolean containsFirst(String sigstring) {
+    boolean containsSigstring(String sigstring) {
         for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) return true;
         return false;
     }
 
-    boolean containsSecond(Integer count) {
+    boolean containsCount(Integer count) {
         for (Pair pair : pairs) if (pair.count.equals(count)) return true;
         return false;
+    }
+
+    String[] getSigStrings() {
+        String[] sigstrings = new String[pairs.size()];
+        for (int i = 0; i < pairs.size(); i++) sigstrings[i] = pairs.get(i).sigstring;
+        return sigstrings;
+    }
+
+    int size() {
+        return pairs.size();
     }
 
     @Override
