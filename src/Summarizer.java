@@ -13,7 +13,7 @@ public class Summarizer {
                 .stream()
                 .reduce("", (a, b) -> a+b);
 
-        String[] sentences     = corpus.split("[.]");
+        String[] sentences     = corpus.split("\\. ");
         String[] words         = corpus.split("[ .,]");
         SignificantWords sig_words = new SignificantWords();
 

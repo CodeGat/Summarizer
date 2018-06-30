@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class SignificantSentences {
     private String[] sentences;
     private String[] words;
@@ -19,6 +21,6 @@ class SignificantSentences {
             most_sig_sentences.add(sentence, sig);
         }
         most_sig_sentences.sortWithCount();
-        return most_sig_sentences.getSigStrings();
+        return Arrays.copyOf(most_sig_sentences.getSigStrings(), n);
     }
 }
