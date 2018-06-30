@@ -1,73 +1,75 @@
 import java.util.ArrayList;
 
-public class BiMap<T, S> {
+public class BiMap {
     private ArrayList<Pair> pairs;
 
     BiMap(){
         pairs = new ArrayList<>();
     }
 
-    void removeWithFirst(T key) {
-        pairs.removeIf(p -> p.first.equals(key));
+    void removeUsingSigstring(String key) {
+        pairs.removeIf(p -> p.sigstring.equals(key));
     }
 
-    void removeWithSecond(S key) {
-        pairs.removeIf(p -> p.second.equals(key));
+    void removeUsingCount(Integer key) {
+        pairs.removeIf(p -> p.count.equals(key));
     }
 
     private class Pair {
-        T first;
-        S second;
+        String sigstring;
+        Integer count;
 
-        Pair(T first, S second){
-            this.first = first;
-            this.second = second;
+        Pair(String sigstring, Integer count){
+            this.sigstring = sigstring;
+            this.count = count;
         }
 
         @Override
         public String toString(){
-            return "<"+first.toString()+", "+second.toString()+">";
+            return "<"+ sigstring +", "+ count.toString()+">";
         }
     }
 
-    void add(T first, S second){
-        pairs.add(new Pair(first, second));
+    void add(String sigstring, Integer second){ pairs.add(new Pair(sigstring, second)); }
+
+    void increment(String sigstring) {
+        for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) pair.count = pair.count++;
     }
 
-    S getSecondWith(T first){
-        for (Pair pair : pairs) if (pair.first == first) return pair.second;
+    Integer getSecondWith(String sigstring){
+        for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) return pair.count;
         return null;
     }
 
-    T getFirstWith(S second){
-        for (Pair pair : pairs) if (pair.second == second) return pair.first;
+    String getFirstWith(Integer count){
+        for (Pair pair : pairs) if (pair.count.equals(count)) return pair.sigstring;
         return null;
     }
 
     void sortWithFirst(){
-        pairs.sort((p1, p2) -> {
-            if (p1.first == p2.first) return 0;
-            else if (p1.first instanceof Integer && p2.first instanceof Integer) {
-                if ((Integer)p1.first < (Integer)p2.first) return -1;
-                else return 1;
-            } else if (p1.first instanceof String && p2.first instanceof String) {
-                if (((String) p1.first).compareTo((String) p2.first) < 0) return -1;
-                else return 1;
-            } else return -2;
+        pairs.sort((p1, p2)-> {
+            if (p1.sigstring.equals(p2.sigstring)) return 0;
+            else if (p1.sigstring.compareTo(p2.sigstring) < 0) return -1;
+            else return 1;
         });
     }
 
     void sortWithSecond(){
         pairs.sort((p1, p2) -> {
-            if (p1.second == p2.second) return 0;
-            else if (p1.second instanceof Integer && p2.second instanceof Integer) {
-                if ((Integer)p1.second < (Integer)p2.second) return -1;
-                else return 1;
-            } else if (p1.second instanceof String && p2.second instanceof String) {
-                if (((String) p1.second).compareTo((String) p2.second) < 0) return -1;
-                else return 1;
-            } else return -2;
+            if (p1.count.equals(p2.count)) return 0;
+            else if (p1.count.compareTo(p2.count) < 0) return -1;
+            else return 1;
         });
+    }
+
+    boolean containsFirst(String sigstring) {
+        for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) return true;
+        return false;
+    }
+
+    boolean containsSecond(Integer count) {
+        for (Pair pair : pairs) if (pair.count.equals(count)) return true;
+        return false;
     }
 
     @Override
