@@ -53,9 +53,9 @@ public class BiMapTests {
         biMap.add("Foo", 59111);
 
         biMap.sortWithCount();
-        Assert.assertEquals("<Cherry, 20><Banana, 99><Apple, 100><Zebra, 101><Foo, 59111>", biMap.toString());
+        Assert.assertEquals("<Foo, 59111><Zebra, 101><Apple, 100><Banana, 99><Cherry, 20>", biMap.toString());
         biMap.sortWithCount();
-        Assert.assertEquals("<Cherry, 20><Banana, 99><Apple, 100><Zebra, 101><Foo, 59111>", biMap.toString());
+        Assert.assertEquals("<Foo, 59111><Zebra, 101><Apple, 100><Banana, 99><Cherry, 20>", biMap.toString());
     }
 
     @Test

@@ -24,8 +24,11 @@ public class SignificantWords {
      * @param word the word to be added.
      */
     void add(String word){
-        if (word_count.containsSigstring(word)) word_count.increment(word);
-        else word_count.add(word, 1);
+        if (word_count.containsSigstring(word)) {
+            word_count.increment(word);
+        } else {
+            word_count.add(word, 1);
+        }
     }
 
     String[] getUpToNthSigWord(int n) {
@@ -35,15 +38,18 @@ public class SignificantWords {
 
     void cleanup() {
         String[] sigstrs = word_count.getSigStrings();
-
         word_count.removeUsingSigstring("");
-        for (String sigstr : sigstrs) if (common_words.contains(sigstr)) word_count.removeUsingSigstring(sigstr);
+        for (String sigstr : sigstrs) {
+            if (common_words.contains(sigstr)) {
+                word_count.removeUsingSigstring(sigstr);
+            }
+        }
     }
 
     void sort(){ word_count.sortWithCount(); }
 
     //Utility Methods
     public String getSignificantWords()     { return Arrays.toString(word_count.getSigStrings()); }
-    public String getSignificanceOfWords()  { return word_count.toString(); }
+    String getSignificanceOfWords()  { return word_count.toString(); }
     public int    getSignificantWordLength(){ return word_count.size(); }
 }

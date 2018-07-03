@@ -16,7 +16,9 @@ class SignificantSentences {
             int sig = 0;
 
             for (int i = 0; i < words.length; i++) {
-                if (sentence.contains(words[i])) sig += words.length - i;
+                if (sentence.contains(words[i])) {
+                    sig += words.length - i;
+                }
             }
             most_sig_sentences.add(sentence, sig);
         }

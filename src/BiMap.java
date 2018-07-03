@@ -33,11 +33,17 @@ public class BiMap {
     void add(String sigstring, Integer count){ pairs.add(new Pair(sigstring, count)); }
 
     void increment(String sigstring) {
-        for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) pair.count = pair.count++;
+        for (Pair pair : pairs) {
+            if (pair.sigstring.equals(sigstring)) {
+                pair.count++;
+            }
+        }
     }
 
     Integer getCount(String sigstring){
-        for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) return pair.count;
+        for (Pair pair : pairs) {
+            if (pair.sigstring.equals(sigstring)) return pair.count;
+        }
         return null;
     }
 
@@ -58,13 +64,15 @@ public class BiMap {
     void sortWithCount(){
         pairs.sort((p1, p2) -> {
             if (p1.count.equals(p2.count)) return 0;
-            else if (p1.count.compareTo(p2.count) < 0) return -1;
-            else return 1;
+            else if (p1.count.compareTo(p2.count) < 0) return 1;
+            else return -1;
         });
     }
 
     boolean containsSigstring(String sigstring) {
-        for (Pair pair : pairs) if (pair.sigstring.equals(sigstring)) return true;
+        for (Pair pair : pairs) {
+            if (pair.sigstring.equals(sigstring)) return true;
+        }
         return false;
     }
 
@@ -73,6 +81,10 @@ public class BiMap {
         return false;
     }
 
+
+    /**
+     * @return an array of the significant strings.
+     */
     String[] getSigStrings() {
         String[] sigstrings = new String[pairs.size()];
         for (int i = 0; i < pairs.size(); i++) sigstrings[i] = pairs.get(i).sigstring;
