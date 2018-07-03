@@ -49,7 +49,7 @@ public class SignificantWords {
     void sort(){ word_count.sortWithCount(); }
 
     //Utility Methods
-    public String getSignificantWords()     { return Arrays.toString(word_count.getSigStrings()); }
+    String getSignificantWords()     { return Arrays.toString(word_count.getSigStrings()); }
     String getSignificanceOfWords()  { return word_count.toString(); }
-    public int    getSignificantWordLength(){ return word_count.size(); }
+    int    getSignificantWordLength(){ return word_count.size(); }
 }
