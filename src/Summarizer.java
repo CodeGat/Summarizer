@@ -6,7 +6,6 @@ public class Summarizer {
 
     public static void main(String[] args) {
         // TODO: crawl for web stories, instead just use system.in for now like the pleb you are.
-        // TODO: 26/06/2018 Write testing framework
         // TODO: 27/06/2018 prefers long sentences
         // TODO: 27/06/2018 sentence parsing - doesn't like regex(*U.S. *)
         Scanner in = new Scanner (System.in);
@@ -16,7 +15,7 @@ public class Summarizer {
                 .stream()
                 .reduce("", (a, b) -> a+b);
 
-        String[] sentences     = corpus.split("\\. ");
+        String[] sentences     = corpus.split("\\.");
         String[] words         = corpus.split("[ .,]");
         SignificantWords sig_words = new SignificantWords();
 
