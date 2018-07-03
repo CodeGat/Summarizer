@@ -11,6 +11,7 @@ public class Summarizer {
     public static void main(String[] args) {
         // TODO: 27/06/2018 prefers long sentences
         // TODO: 27/06/2018 sentence parsing - doesn't like regex(*U.S. *)
+        // TODO: 3/07/2018 add in autocomplete/better version of crawler depending on the site.
         String corpus = "";
         switch (args.length) {
             case 3:

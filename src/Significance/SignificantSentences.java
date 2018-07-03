@@ -1,15 +1,17 @@
+package Significance;
+
 import java.util.Arrays;
 
-class SignificantSentences {
+public class SignificantSentences {
     private String[] sentences;
     private String[] words;
 
-    SignificantSentences(String[] sentences, String[] words) {
+    public SignificantSentences(String[] sentences, String[] words) {
         this.sentences = sentences;
         this.words = words;
     }
 
-    String[] getNMostSigSentences(int n) {
+    public String[] getNMostSigSentences(int n) {
         BiMap most_sig_sentences = new BiMap();
 
         for (String sentence : sentences){

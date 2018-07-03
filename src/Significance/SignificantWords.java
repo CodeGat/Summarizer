@@ -1,3 +1,5 @@
+package Significance;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,7 +9,7 @@ public class SignificantWords {
     private BiMap word_count;
     private ArrayList<String> common_words;
 
-    SignificantWords(){
+    public SignificantWords(){
         word_count   = new BiMap();
         common_words = new ArrayList<>();
         try {
@@ -23,7 +25,7 @@ public class SignificantWords {
     /**
      * @param word the word to be added.
      */
-    void add(String word){
+    public void add(String word){
         if (word_count.containsSigstring(word)) {
             word_count.increment(word);
         } else {
@@ -31,12 +33,12 @@ public class SignificantWords {
         }
     }
 
-    String[] getUpToNthSigWord(int n) {
+    public String[] getUpToNthSigWord(int n) {
         String[] keys = word_count.getSigStrings();
         return Arrays.copyOf(keys, n);
     }
 
-    void cleanup() {
+    public void cleanup() {
         String[] sigstrs = word_count.getSigStrings();
         word_count.removeUsingSigstring("");
         for (String sigstr : sigstrs) {
@@ -46,10 +48,10 @@ public class SignificantWords {
         }
     }
 
-    void sort(){ word_count.sortWithCount(); }
+    public void sort(){ word_count.sortWithCount(); }
 
     //Utility Methods
     String getSignificantWords()     { return Arrays.toString(word_count.getSigStrings()); }
-    String getSignificanceOfWords()  { return word_count.toString(); }
+    public String getSignificanceOfWords()  { return word_count.toString(); }
     int    getSignificantWordLength(){ return word_count.size(); }
 }
