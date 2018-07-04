@@ -1,8 +1,6 @@
 package Significance;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class SignificantWords {
@@ -13,7 +11,8 @@ public class SignificantWords {
         word_count   = new BiMap();
         common_words = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("res/common_words.txt"));
+            InputStream in = getClass().getResourceAsStream("/common_words.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line;
             while ((line=br.readLine()) != null) common_words.add(line);
             br.close();
