@@ -1001,3 +1001,8 @@ is
 -
 an
 said
+"
+“
+are
+was
+been
