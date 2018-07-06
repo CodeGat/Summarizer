@@ -2,3 +2,5 @@
 .idea/
 Summarizer.iml
 out/
+test/
+src/META-INF/
