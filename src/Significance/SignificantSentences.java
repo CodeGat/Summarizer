@@ -1,7 +1,5 @@
 package Significance;
 
-import java.util.Arrays;
-
 public class SignificantSentences {
     private String[] sentences;
     private String[] words;
