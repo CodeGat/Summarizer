@@ -36,7 +36,7 @@ public class Summarizer {
         System.out.println(corpus);
 
         String[] sentences     = corpus.split("\\.");
-        String[] words         = corpus.split("[ .,]");
+        String[] words         = corpus.toLowerCase().split("[ .,]");
         SignificantWords sig_words = new SignificantWords();
 
         for (String word : words) sig_words.add(word);
@@ -45,10 +45,20 @@ public class Summarizer {
         String[] msws = sig_words.getUpToNthSigWord(N_SIG_WORDS);
 
         SignificantSentences sig_sentences = new SignificantSentences(sentences, msws);
-        String[] ss = sig_sentences.getNMostSigSentences(N_SIG_SENTENCES);
-        System.out.println("Sigwords: "+Arrays.toString(msws) + "\nSigsents: ");
-        StringBuilder res = new StringBuilder();
-        for (String s : ss) res.append(s).append("\n");
-        System.out.println(res.toString());
+        sig_sentences.findSigSentences();
+        sig_sentences.sortByMostSignificant();
+        sig_sentences.trim(N_SIG_SENTENCES);
+        String[] mss = sig_sentences.getSentences();
+        sig_sentences.sortByOriginalOrdering();
+        String[] oss = sig_sentences.getSentences();
+
+        StringBuilder mss_res = new StringBuilder();
+        StringBuilder oss_res = new StringBuilder();
+        for (String s : mss) mss_res.append(s).append("\n");
+        for (String s : oss) oss_res.append(s).append("\n");
+
+        System.out.println("\nSigwords: "+Arrays.toString(msws) + "\n\nMost Significant Sentences: \n" +
+                mss_res.toString() + "\n\nOrdered Significant Sentences: \n" +oss_res.toString());
+
     }
 }

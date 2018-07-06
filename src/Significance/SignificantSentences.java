@@ -5,15 +5,15 @@ import java.util.Arrays;
 public class SignificantSentences {
     private String[] sentences;
     private String[] words;
+    private BiMap    sig_sentences;
 
     public SignificantSentences(String[] sentences, String[] words) {
         this.sentences = sentences;
         this.words = words;
+        sig_sentences = new BiMap();
     }
 
-    public String[] getNMostSigSentences(int n) {
-        BiMap most_sig_sentences = new BiMap();
-
+    public void findSigSentences() {
         for (String sentence : sentences){
             int sig = 0;
 
@@ -22,9 +22,30 @@ public class SignificantSentences {
                     sig += words.length - i;
                 }
             }
-            most_sig_sentences.add(sentence, sig);
+            sig_sentences.add(sentence, sig);
         }
-        most_sig_sentences.sortWithCount();
-        return Arrays.copyOf(most_sig_sentences.getSigStrings(), n);
     }
+
+    public void sortByMostSignificant(){
+        sig_sentences.sortWithCount();
+    }
+
+    public void sortByOriginalOrdering(){
+        BiMap sorted_sentences = new BiMap();
+
+        for (String sentence : sentences){
+            for (String sig_sentence : sig_sentences.getSigStrings()){
+                if (sentence.equals(sig_sentence)){
+                    sorted_sentences.add(sentence, sig_sentences.getCount(sig_sentence));
+                }
+            }
+        }
+        sig_sentences = sorted_sentences;
+    }
+
+    public void trim(int n){
+        sig_sentences.trim(n);
+    }
+
+    public String[] getSentences(){ return sig_sentences.getSigStrings(); }
 }

@@ -9,9 +9,6 @@ public class BiMap {
         pairs = new ArrayList<>();
     }
 
-    public void removeUsingSigstring(String key) {
-        pairs.removeIf(p -> p.sigstring.equals(key));
-    }
 
     private class Pair {
         String sigstring;
@@ -28,8 +25,18 @@ public class BiMap {
         }
     }
 
-    public void add(String sigstring, Integer count){ pairs.add(new Pair(sigstring, count)); }
+    /**
+     * @param sigstring a string that has occured at least once
+     * @param count adding n significance to a string
+     */
+    public void add(String sigstring, Integer count){
+        pairs.add(new Pair(sigstring, count));
+    }
 
+    /**
+     * Increments a strings significance by 1
+     * @param sigstring the string whose significance needs to be incremented.
+     */
     void increment(String sigstring) {
         for (Pair pair : pairs) {
             if (pair.sigstring.equals(sigstring)) {
@@ -38,14 +45,27 @@ public class BiMap {
         }
     }
 
-    /**
-     * sorts n pairs by a custom
-     */
+    public void removeUsingSigstring(String key) {
+        pairs.removeIf(p -> p.sigstring.equals(key));
+    }
+
+    public void removeUsingCount(Integer key) {
+        pairs.removeIf(p -> p.count.equals(key));
+    }
+
     public void sortWithCount(){
         pairs.sort((p1, p2) -> {
             if (p1.count.equals(p2.count)) return 0;
             else if (p1.count.compareTo(p2.count) < 0) return 1;
             else return -1;
+        });
+    }
+
+    public void sortWithSigstring(){
+        pairs.sort((p1, p2)-> {
+            if (p1.sigstring.equals(p2.sigstring)) return 0;
+            else if (p1.sigstring.compareTo(p2.sigstring) < 0) return -1;
+            else return 1;
         });
     }
 
@@ -56,38 +76,20 @@ public class BiMap {
         return false;
     }
 
-    /**
-     * @return an array of the significant strings.
-     */
-    String[] getSigStrings() {
-        String[] sigstrings = new String[pairs.size()];
-        for (int i = 0; i < pairs.size(); i++) sigstrings[i] = pairs.get(i).sigstring;
-        return sigstrings;
-    }
-
-    int size() {
-        return pairs.size();
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder rtn = new StringBuilder();
-        pairs.forEach(e -> rtn.append(e.toString()));
-        return rtn.toString();
-    }
-
-    //Utility or Unneeded Methods
     public boolean containsCount(Integer count) {
         for (Pair pair : pairs) if (pair.count.equals(count)) return true;
         return false;
     }
 
-    public void sortWithSigstring(){
-        pairs.sort((p1, p2)-> {
-            if (p1.sigstring.equals(p2.sigstring)) return 0;
-            else if (p1.sigstring.compareTo(p2.sigstring) < 0) return -1;
-            else return 1;
-        });
+    void trim(int n) {
+        pairs.subList(n, pairs.size()).clear();
+    }
+
+    // accessor and misc. methods
+    String[] getSigStrings() {
+        String[] sigstrings = new String[pairs.size()];
+        for (int i = 0; i < pairs.size(); i++) sigstrings[i] = pairs.get(i).sigstring;
+        return sigstrings;
     }
 
     public Integer getCount(String sigstring){
@@ -103,7 +105,14 @@ public class BiMap {
         return null;
     }
 
-    public void removeUsingCount(Integer key) {
-        pairs.removeIf(p -> p.count.equals(key));
+    int size() {
+        return pairs.size();
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder rtn = new StringBuilder();
+        pairs.forEach(e -> rtn.append(e.toString()));
+        return rtn.toString();
     }
 }
