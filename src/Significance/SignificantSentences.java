@@ -11,6 +11,9 @@ public class SignificantSentences {
         sig_sentences = new BiMap();
     }
 
+    /**
+     * adds all sentences to a BiMap and assigns a significance level to each.
+     */
     public void findSigSentences() {
         for (String sentence : sentences){
             int sig = 0;
@@ -28,6 +31,9 @@ public class SignificantSentences {
         sig_sentences.sortWithCount();
     }
 
+    /**
+     * Sorts the BiMap by the original ordering in the story or article - the tldr is more natural.
+     */
     public void sortByOriginalOrdering(){
         BiMap sorted_sentences = new BiMap();
 

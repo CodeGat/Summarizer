@@ -49,7 +49,7 @@ public class Summarizer {
 
         StringBuilder oss_res = new StringBuilder();
         for (String s : oss) oss_res.append(s).append(". \n");
-        System.out.print("\n"+oss_res.toString()+"\nSignificant Words:");
+        System.out.print("\n"+oss_res.toString()+"\nSignificant Words: ");
         for (int i = 0; i < msws.length; i++) System.out.print(i+1+": "+msws[i]+", ");
     }
 }

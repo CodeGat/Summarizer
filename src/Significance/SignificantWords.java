@@ -32,11 +32,18 @@ public class SignificantWords {
         }
     }
 
+    /**
+     * @param n the inclusive upper-bound index of the signficant words to return.
+     * @return an array of the first n words.
+     */
     public String[] getUpToNthSigWord(int n) {
         String[] keys = word_count.getSigStrings();
         return Arrays.copyOf(keys, n);
     }
 
+    /**
+     * removes the empty entry as well as any common words or symbols.
+     */
     public void cleanup() {
         String[] sigstrs = word_count.getSigStrings();
         word_count.removeUsingSigstring("");
@@ -47,6 +54,9 @@ public class SignificantWords {
         }
     }
 
+    /**
+     * calls down to a BiMap sort.
+     */
     public void sort(){ word_count.sortWithCount(); }
 
     //Utility Methods

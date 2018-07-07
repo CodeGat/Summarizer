@@ -9,7 +9,6 @@ public class BiMap {
         pairs = new ArrayList<>();
     }
 
-
     private class Pair {
         String sigstring;
         Integer count;
@@ -99,7 +98,10 @@ public class BiMap {
         return null;
     }
 
-    // TODO: 30/06/2018 Gets only the first, could be more than one sigstring that occurs n times
+    /**
+     * @param count the significance to look for.
+     * @return the first sigstring with significance of the argument.
+     */
     public String getSigstring(Integer count){
         for (Pair pair : pairs) if (pair.count.equals(count)) return pair.sigstring;
         return null;
