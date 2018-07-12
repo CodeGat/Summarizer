@@ -11,8 +11,7 @@ public class SignificantSentencesTests {
             "babbage would have been programming to first write something about the world"}; //5+4+3=12
     private String[] words     = new String[]{"babbage", "programming", "world", "hello", "first"};
 
-    @Test
-    public void findMostSigSentencesTest(){
+    @Test public void findMostSigSentencesTest(){
         SignificantSentences ss = new SignificantSentences(sentences, words);
         String[] expecteds = new String[]{"the first real application of programming was with babbage, and his hello world program",
                 "babbage would have been programming to first write something about the world",
@@ -24,8 +23,7 @@ public class SignificantSentencesTests {
         Assert.assertArrayEquals(expecteds, ss.getSentences());
     }
 
-    @Test
-    public void sortByOriginalOrderingTest(){
+    @Test public void sortByOriginalOrderingTest(){
         SignificantSentences ss = new SignificantSentences(sentences, words);
 
         ss.findSigSentences();
@@ -33,8 +31,7 @@ public class SignificantSentencesTests {
         Assert.assertArrayEquals(sentences, ss.getSentences());
     }
 
-    @Test
-    public void getNSentencesOrigOrderingTest(){
+    @Test public void getNSentencesOrigOrderingTest(){
         SignificantSentences
                 ss1 = new SignificantSentences(sentences, words),
                 ss2 = new SignificantSentences(sentences, words),
@@ -66,8 +63,7 @@ public class SignificantSentencesTests {
         Assert.assertArrayEquals(expected3, ss3.getSentences());
     }
 
-    @Test
-    public void getNSentencesMostSignificantTest(){
+    @Test public void getNSentencesMostSignificantTest(){
         SignificantSentences
                 ss1 = new SignificantSentences(sentences, words),
                 ss2 = new SignificantSentences(sentences, words),

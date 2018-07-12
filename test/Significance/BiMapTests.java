@@ -5,9 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class BiMapTests {
-
-    @Test
-    public void testAddPairs(){
+    @Test public void testAddPairs(){
         BiMap biMap = new BiMap();
 
         biMap.add("Apple", 100);
@@ -18,8 +16,7 @@ public class BiMapTests {
         Assert.assertEquals("<Apple, 100><Cherry, 20><Banana, 99>", biMap.toString());
     }
 
-    @Test
-    public void testRemovePairs(){
+    @Test public void testRemovePairs(){
         BiMap biMap = new BiMap();
         biMap.add("Apple", 100);
         biMap.add("Cherry", 20);
@@ -31,8 +28,7 @@ public class BiMapTests {
         Assert.assertEquals("<Banana, 99>", biMap.toString());
     }
 
-    @Test
-    public void testSortWithFirst(){
+    @Test public void testSortWithFirst(){
         BiMap biMap = new BiMap();
         biMap.add("Apple", 100);
         biMap.add("Cherry", 20);
@@ -46,8 +42,7 @@ public class BiMapTests {
         Assert.assertEquals("<Apple, 100><Banana, 99><Cherry, 20><Foo, 59111><Zebra, 101>", biMap.toString());
     }
 
-    @Test
-    public void testSortWithSecond() {
+    @Test public void testSortWithSecond() {
         BiMap biMap = new BiMap();
         biMap.add("Apple", 100);
         biMap.add("Cherry", 20);
@@ -61,8 +56,7 @@ public class BiMapTests {
         Assert.assertEquals("<Foo, 59111><Zebra, 101><Apple, 100><Banana, 99><Cherry, 20>", biMap.toString());
     }
 
-    @Test
-    public void testGetWith() {
+    @Test public void testGetWith() {
         BiMap biMap = new BiMap();
         biMap.add("Apple", 100);
         biMap.add("Cherry", 20);
@@ -74,8 +68,7 @@ public class BiMapTests {
         Assert.assertNull(biMap.getSigstring(0));
     }
 
-    @Test
-    public void testContains(){
+    @Test public void testContains(){
         BiMap biMap = new BiMap();
         biMap.add("Apple", 100);
         biMap.add("Cherry", 20);
@@ -87,8 +80,7 @@ public class BiMapTests {
         Assert.assertFalse(biMap.containsCount(9001));
     }
 
-    @Test
-    public void testUpdate() {
+    @Test public void testUpdate() {
         BiMap biMap = new BiMap();
         biMap.add("Apple", 100);
         biMap.add("Cherry", 20);

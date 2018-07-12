@@ -1,27 +1,23 @@
 package Significance;
 
-import Significance.SignificantWords;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class SignificantWordsTests {
-    @Test
-    public void addNewUncommonSigWordTests(){
+    @Test public void addNewUncommonSigWordTests(){
         SignificantWords sigwords = new SignificantWords();
         sigwords.add("foobar");
         Assert.assertEquals("<foobar, 1>", sigwords.getSignificanceOfWords());
     }
 
-    @Test
-    public void addAnotherUncommonSigWordTest(){
+    @Test public void addAnotherUncommonSigWordTest(){
         SignificantWords sigwords = new SignificantWords();
         sigwords.add("foobar");
         sigwords.add("foobar");
         Assert.assertEquals("<foobar, 2>", sigwords.getSignificanceOfWords());
     }
 
-    @Test
-    public void cleanupSigStringsTest(){
+    @Test public void cleanupSigStringsTest(){
         SignificantWords sigwords = new SignificantWords();
         sigwords.add("");
         sigwords.add("foobar");
@@ -32,8 +28,7 @@ public class SignificantWordsTests {
         Assert.assertEquals("<foobar, 1><java, 1>", sigwords.getSignificanceOfWords());
     }
 
-    @Test
-    public void sortSigStringsTest(){
+    @Test public void sortSigStringsTest(){
         SignificantWords sigwords = new SignificantWords();
         sigwords.add("foobar");
         sigwords.add("foobar");
@@ -45,8 +40,7 @@ public class SignificantWordsTests {
         Assert.assertEquals("<foobar, 3><madagascar, 2><java, 1>", sigwords.getSignificanceOfWords());
     }
 
-    @Test
-    public void getUpToNthSigWordTest(){
+    @Test public void getUpToNthSigWordTest(){
         SignificantWords sigwords = new SignificantWords();
         sigwords.add("foobar");
         sigwords.add("foobar");
