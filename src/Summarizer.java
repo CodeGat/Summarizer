@@ -1,5 +1,6 @@
 import Significance.SignificantSentences;
 import Significance.SignificantWords;
+import Utilities.Breaker;
 import WebCrawler.Crawler;
 
 import java.util.*;
@@ -31,7 +32,7 @@ public class Summarizer {
                 System.exit(0);
         }
 
-        String[] sentences     = corpus.split("\\.");
+        String[] sentences     = Breaker.sentence_breaker(corpus);
         String[] words         = corpus.toLowerCase().split("[ .,]");
         SignificantWords sig_words = new SignificantWords();
 
