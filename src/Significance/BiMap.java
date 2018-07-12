@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class BiMap {
     private ArrayList<Pair> pairs;
 
-    public BiMap(){
+    BiMap(){
         pairs = new ArrayList<>();
     }
 
@@ -28,7 +28,7 @@ public class BiMap {
      * @param sigstring a string that has occured at least once
      * @param count adding n significance to a string
      */
-    public void add(String sigstring, Integer count){
+    void add(String sigstring, Integer count){
         pairs.add(new Pair(sigstring, count));
     }
 
@@ -44,15 +44,15 @@ public class BiMap {
         }
     }
 
-    public void removeUsingSigstring(String key) {
+    void removeUsingSigstring(String key) {
         pairs.removeIf(p -> p.sigstring.equals(key));
     }
 
-    public void removeUsingCount(Integer key) {
+    void removeUsingCount(Integer key) {
         pairs.removeIf(p -> p.count.equals(key));
     }
 
-    public void sortWithCount(){
+    void sortWithCount(){
         pairs.sort((p1, p2) -> {
             if (p1.count.equals(p2.count)) return 0;
             else if (p1.count.compareTo(p2.count) < 0) return 1;
@@ -60,7 +60,7 @@ public class BiMap {
         });
     }
 
-    public void sortWithSigstring(){
+    void sortWithSigstring(){
         pairs.sort((p1, p2)-> {
             if (p1.sigstring.equals(p2.sigstring)) return 0;
             else if (p1.sigstring.compareTo(p2.sigstring) < 0) return -1;
@@ -68,14 +68,14 @@ public class BiMap {
         });
     }
 
-    public boolean containsSigstring(String sigstring) {
+    boolean containsSigstring(String sigstring) {
         for (Pair pair : pairs) {
             if (pair.sigstring.equals(sigstring)) return true;
         }
         return false;
     }
 
-    public boolean containsCount(Integer count) {
+    boolean containsCount(Integer count) {
         for (Pair pair : pairs) if (pair.count.equals(count)) return true;
         return false;
     }
@@ -91,7 +91,7 @@ public class BiMap {
         return sigstrings;
     }
 
-    public Integer getCount(String sigstring){
+    Integer getCount(String sigstring){
         for (Pair pair : pairs) {
             if (pair.sigstring.equals(sigstring)) return pair.count;
         }
@@ -102,7 +102,7 @@ public class BiMap {
      * @param count the significance to look for.
      * @return the first sigstring with significance of the argument.
      */
-    public String getSigstring(Integer count){
+    String getSigstring(Integer count){
         for (Pair pair : pairs) if (pair.count.equals(count)) return pair.sigstring;
         return null;
     }

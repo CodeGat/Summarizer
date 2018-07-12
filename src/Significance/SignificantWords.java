@@ -61,6 +61,6 @@ public class SignificantWords {
 
     //Utility Methods
     String getSignificantWords()     { return Arrays.toString(word_count.getSigStrings()); }
-    public String getSignificanceOfWords()  { return word_count.toString(); }
+    String getSignificanceOfWords()  { return word_count.toString(); }
     int    getSignificantWordLength(){ return word_count.size(); }
 }
