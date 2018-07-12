@@ -26,7 +26,7 @@ public class BreakerTests {
                 sentence_breaker("Hello World."));
 
         Assert.assertArrayEquals("Test 5: Other Punctuation",
-                new String[]{"Hello World! ", "How are you? ", "Good!"},
+                new String[]{"Hello World!", "How are you?", "Good!"},
                 sentence_breaker("Hello World! How are you? Good!"));
 
         Assert.assertArrayEquals("Test 6: Other puncuation with no-space",
@@ -43,7 +43,7 @@ public class BreakerTests {
                 sentenceTerminatesHere(0, ". Hello world! "));
 
         Assert.assertTrue("Test 2: n-index truthiness",
-                sentenceTerminatesHere(10, "Something. Wow!"));
+                sentenceTerminatesHere(9, "Something. Wow!"));
 
         Assert.assertTrue("Test 3: no-space truthiness",
                 sentenceTerminatesHere(4, "lol.This is one too!"));

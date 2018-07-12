@@ -38,18 +38,17 @@ public class Breaker {
     //conditions: [.?!] [A-Z0-9] | [.?!][A-Z0-9]
     // TODO: 12/07/2018 Terminating word is based on previous one sometimes! Mr. X depends on Mr.!
     static boolean sentenceTerminatesHere(int stop_index, String corpus){
-//        try {
-//            if (corpus.charAt(stop_index + 1) == ' ') {
-//                stop_index++;
-//            }
-//        } catch (StringIndexOutOfBoundsException sioobx) {
-//            System.err.println("Caught end of sentence");
-//        }
+        // a quick check to see if there is a space after the period. If so, advance over it.
+        if (stop_index + 1 < corpus.length() && corpus.charAt(stop_index + 1) == ' ') {
+            stop_index = stop_index + 2;
+        }
 
+        //If there is a capital word in the word after the period, then it is the start of a new sentence. Should be
+        // just the first letter.
         for (int i = stop_index; i < corpus.length(); i++) {
             String ch = Character.toString(corpus.charAt(i));
             if (ch.matches("[A-Z]") || i == corpus.length() - 1) return true;
-//            else if (ch.equals(" ")) return false;
+            else if (ch.equals(" ")) return false;
         }
         return false;
     }
