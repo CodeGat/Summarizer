@@ -1,8 +1,11 @@
 package Utilities;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class Breaker {
+    private static String[] nonterminators = {"Mr", "Mrs", "Ms", "Dr"};
+
     public Breaker(){}
 
     /**
@@ -16,8 +19,7 @@ public class Breaker {
         int sentence_start = 0;
         for (int i = 0; i < corpus.length(); i++){
             char ch = corpus.charAt(i);
-            boolean does_terminate = sentenceTerminatesHere(i, corpus);
-            if ((ch == '.' || ch == '?' || ch == '!') && does_terminate){
+            if ((ch == '.' || ch == '?' || ch == '!') && sentenceTerminatesHere(i, corpus)){
                 sentences.add(corpus.substring(sentence_start, i+1));
                 sentence_start = i+1;
             } else if (corpus.charAt(sentence_start) == ' ') {
@@ -32,28 +34,35 @@ public class Breaker {
      * Checks if the next word is terminating (i.e. it is the start of a new sentence, as opposed to a non-terminating
      * period like in 'Mr.' or 'U.S.').
      * @param stop_index the index of the full stop.
-     * @param corpus the string corpus that is used for finding the next word.
      * @return true if it is the start of a new sentence.
      */
     //conditions: [.?!] [A-Z0-9] | [.?!][A-Z0-9]
-    // TODO: 12/07/2018 Terminating word is based on previous one sometimes! Mr. X depends on Mr.!
+    // TODO: 13/07/2018 U.S. breaks as it is conforming!
     static boolean sentenceTerminatesHere(int stop_index, String corpus){
+        String prev_word = getPrevWord(stop_index, corpus);
+        if (Stream.of(nonterminators).anyMatch(x -> x.equals(prev_word))) return false;
+
         // a quick check to see if there is a space after the period. If so, advance over it.
         if (stop_index + 1 < corpus.length() && corpus.charAt(stop_index + 1) == ' ') {
-            stop_index = stop_index + 2;
+            stop_index += 2;
         }
 
-        //If there is a capital word in the word after the period, then it is the start of a new sentence. Should be
-        // just the first letter.
-        for (int i = stop_index; i < corpus.length(); i++) {
-            String ch = Character.toString(corpus.charAt(i));
-            if (ch.matches("[A-Z]") || i == corpus.length() - 1) return true;
-            else if (ch.equals(" ")) return false;
-        }
-        return false;
+        String next_word = getNextWord(stop_index, corpus);
+        return next_word.matches("[A-Z].*|");
     }
 
-    public static String[] word_breaker(String corpus){
-        return null;
+    static String getNextWord(int stop_index, String corpus) {
+        String   cut_corpus = corpus.substring(stop_index);
+        String[] words      = cut_corpus.split("[.?! ]");
+
+        if (words.length > 0) return words[0].equals("") ? words[1] : words[0];
+        else return "";
+    }
+
+    static String getPrevWord(int stop_index, String corpus) {
+        String   cut_corpus = corpus.substring(0, stop_index);
+        String[] words      = cut_corpus.split("[. ]");
+
+        return words[words.length - 1];
     }
 }

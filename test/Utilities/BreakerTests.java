@@ -3,9 +3,7 @@ package Utilities;
 import org.junit.Assert;
 import org.junit.Test;
 
-
-import static Utilities.Breaker.sentenceTerminatesHere;
-import static Utilities.Breaker.sentence_breaker;
+import static Utilities.Breaker.*;
 
 public class BreakerTests {
     @Test public void sentenceBreakerTests(){
@@ -39,13 +37,10 @@ public class BreakerTests {
     }
 
     @Test public void sentenceTerminatesHereConformingTests() {
-        Assert.assertTrue("Test 1: Basic 0-index truthiness",
-                sentenceTerminatesHere(0, ". Hello world! "));
-
-        Assert.assertTrue("Test 2: n-index truthiness",
+        Assert.assertTrue("Test 1: n-index truthiness",
                 sentenceTerminatesHere(9, "Something. Wow!"));
 
-        Assert.assertTrue("Test 3: no-space truthiness",
+        Assert.assertTrue("Test 2: no-space truthiness",
                 sentenceTerminatesHere(4, "lol.This is one too!"));
     }
 
@@ -64,5 +59,33 @@ public class BreakerTests {
 
         Assert.assertFalse("Test 5: US second period falsiness",
                 sentenceTerminatesHere(3, "U.S. fleet"));
+    }
+
+    @Test public void getPrevWordTests() {
+        Assert.assertEquals("Test 1: Simple",
+                "World",
+                getPrevWord(11, "Hello World."));
+
+        Assert.assertEquals("Test 2: single-word previous",
+                "hello-world",
+                getPrevWord(11, "hello-world. "));
+
+        Assert.assertEquals("Test 3: Another one",
+                "Babbage",
+                getPrevWord(15, "Charles Babbage? Who is that? "));
+    }
+
+    @Test public void getNextWordTests(){
+        Assert.assertEquals("Test 1: Simple",
+                "Hello",
+                getNextWord(0, ".Hello World!"));
+
+        Assert.assertEquals("Test 2: No space after",
+                "No",
+                getNextWord(0, ".No"));
+
+        Assert.assertEquals("Test 3: Sentence ending in another sentence",
+                "No!",
+                getNextWord(3, "Yes.No!"));
     }
 }
