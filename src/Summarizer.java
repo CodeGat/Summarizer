@@ -10,6 +10,36 @@ public class Summarizer {
     private static int N_SIG_SENTENCES = 5;
 
     public static void main(String[] args) {
+        String corpus = parseArgs(args);
+
+        String[] sentences     = Breaker.sentence_breaker(corpus);
+        String[] words         = corpus.toLowerCase().split("[ .,]");
+        SignificantWords sig_words = new SignificantWords();
+
+        for (String word : words) sig_words.add(word);
+        sig_words.cleanup();
+        sig_words.sort();
+        String[] most_sig_words = sig_words.getUpToNthSigWord(N_SIG_WORDS);
+
+        SignificantSentences sig_sentences = new SignificantSentences(sentences, most_sig_words);
+        sig_sentences.findSigSentences();
+        sig_sentences.sortByMostSignificant();
+        sig_sentences.trim(N_SIG_SENTENCES);
+        sig_sentences.sortByOriginalOrdering();
+        String[] ordered_sig_sentences = sig_sentences.getSentences();
+
+        StringBuilder builder = new StringBuilder();
+        for (String s : ordered_sig_sentences) builder.append(s).append(". \n");
+        System.out.print("\n"+builder.toString()+"\nSignificant Words: ");
+        for (int i = 0; i < most_sig_words.length; i++) System.out.print(i+1+": "+most_sig_words[i]+", ");
+    }
+
+    /**
+     * From potential args in the terminal get the corpus or exit.
+     * @param args command line args.
+     * @return corpus.
+     */
+    private static String parseArgs(String[] args) {
         String corpus = "";
         switch (args.length) {
             case 3:
@@ -31,26 +61,6 @@ public class Summarizer {
                         " - number of significant sentences to return\n\turl - the url of the paper or story");
                 System.exit(0);
         }
-
-        String[] sentences     = Breaker.sentence_breaker(corpus);
-        String[] words         = corpus.toLowerCase().split("[ .,]");
-        SignificantWords sig_words = new SignificantWords();
-
-        for (String word : words) sig_words.add(word);
-        sig_words.cleanup();
-        sig_words.sort();
-        String[] msws = sig_words.getUpToNthSigWord(N_SIG_WORDS);
-
-        SignificantSentences sig_sentences = new SignificantSentences(sentences, msws);
-        sig_sentences.findSigSentences();
-        sig_sentences.sortByMostSignificant();
-        sig_sentences.trim(N_SIG_SENTENCES);
-        sig_sentences.sortByOriginalOrdering();
-        String[] oss = sig_sentences.getSentences();
-
-        StringBuilder oss_res = new StringBuilder();
-        for (String s : oss) oss_res.append(s).append(". \n");
-        System.out.print("\n"+oss_res.toString()+"\nSignificant Words: ");
-        for (int i = 0; i < msws.length; i++) System.out.print(i+1+": "+msws[i]+", ");
+        return corpus;
     }
 }
