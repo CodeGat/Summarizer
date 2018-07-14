@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 
 public class Breaker {
     private static String[] nonterminators = {"Mr", "Mrs", "Ms", "Dr"};
+    private static String[] special_words  = {"US", "RADAR"};
 
     public Breaker(){}
 
@@ -34,10 +35,9 @@ public class Breaker {
      * Checks if the next word is terminating (i.e. it is the start of a new sentence, as opposed to a non-terminating
      * period like in 'Mr.' or 'U.S.').
      * @param stop_index the index of the full stop.
+     * @param corpus the text of which we are finding the termination state.
      * @return true if it is the start of a new sentence.
      */
-    //conditions: [.?!] [A-Z0-9] | [.?!][A-Z0-9]
-    // TODO: 13/07/2018 U.S. breaks as it is conforming!
     static boolean sentenceTerminatesHere(int stop_index, String corpus){
         String prev_word = getPrevWord(stop_index, corpus);
         if (Stream.of(nonterminators).anyMatch(x -> x.equals(prev_word))) return false;
@@ -48,7 +48,8 @@ public class Breaker {
         }
 
         String next_word = getNextWord(stop_index, corpus);
-        return next_word.matches("[A-Z].*|");
+        if (Stream.of(special_words).anyMatch(x -> x.equals(prev_word + next_word))) return false;
+        return next_word.matches("[A-Z].*|\\.|");
     }
 
     static String getNextWord(int stop_index, String corpus) {
@@ -61,7 +62,7 @@ public class Breaker {
 
     static String getPrevWord(int stop_index, String corpus) {
         String   cut_corpus = corpus.substring(0, stop_index);
-        String[] words      = cut_corpus.split("[. ]");
+        String[] words      = cut_corpus.split("[.?! ]");
 
         return words[words.length - 1];
     }
