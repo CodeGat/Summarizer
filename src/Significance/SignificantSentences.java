@@ -48,7 +48,10 @@ public class SignificantSentences {
     }
 
     public void trim(int n){
-        sig_sentences.trim(n);
+        if (sentences.length < n) {
+            System.err.println("We can't find "+n+" significant sentences because there are "+sentences.length+". " +
+                    "Finding "+sentences.length+" instead. ");
+        } else sig_sentences.trim(n);
     }
 
     public String[] getSentences(){ return sig_sentences.getSigStrings(); }

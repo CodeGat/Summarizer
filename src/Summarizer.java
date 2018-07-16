@@ -29,7 +29,7 @@ public class Summarizer {
         String[] ordered_sig_sentences = sig_sentences.getSentences();
 
         StringBuilder builder = new StringBuilder();
-        for (String s : ordered_sig_sentences) builder.append(s).append(". \n");
+        for (String s : ordered_sig_sentences) builder.append(s).append("\n");
         System.out.print("\n"+builder.toString()+"\nSignificant Words: ");
         for (int i = 0; i < most_sig_words.length; i++) System.out.print(i+1+": "+most_sig_words[i]+", ");
     }
