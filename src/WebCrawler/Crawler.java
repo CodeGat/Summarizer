@@ -14,6 +14,8 @@ public class Crawler {
     public static String crawl(String url){
         StringBuilder res = new StringBuilder();
         Elements tags = null;
+        boolean defaulted = false;
+
         try {
             System.out.print("Connecting to "+url+"...");
             Document doc  = Jsoup.connect(url).get();
@@ -22,7 +24,10 @@ public class Crawler {
             else if (url.contains("foxnews"))    tags = doc.select(".article-body p");
             else if (url.contains("news.com"))   tags = doc.select("div#story p");
             else if (url.contains("abc.net.au")) tags = doc.select(".article p").select(":not(.topics)");
-            else                                 tags = doc.getElementsByTag("p");
+            else {
+                defaulted = true;
+                tags = doc.getElementsByTag("p");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +35,7 @@ public class Crawler {
         for (Element tag : Objects.requireNonNull(tags)){
             res.append(tag.text());
         }
-        System.out.println("DONE.");
+        System.out.println("DONE"+ (defaulted ? "(Using default Crawler)." : "."));
 
         return res.toString();
     }
